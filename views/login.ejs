@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - LaWar</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="login-page">
+    <div class="header">
+        <div class="logo">LaWar!</div>
+        <div class="tagline">Laporkan seluruh keluhanmu di sini!</div>
+    </div>
+
+    <form action="/login" method="POST">
+        <h1>Login</h1>
+
+        <div class="input-group">
+            <label><span class="icon">👤</span>Username</label>
+            <input type="text" name="username" placeholder="Masukkan username Anda" required>
+        </div>
+
+        <div class="input-group">
+            <label><span class="icon">🔑</span>Password</label>
+            <input type="password" name="password" placeholder="Masukkan password Anda" required>
+            <div class="forgot-password">lupa password?</div>
+        </div>
+
+        <% if (error) { %>
+            <p class="error"><%= error %></p>
+        <% } %>
+
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
