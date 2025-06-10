@@ -1,11 +1,14 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/lawar', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+const mysql = require('mysql');
+
+ var con = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '', 
+  database: 'lawar_db'
+ });
 
 const app = express();
 app.set('view engine', 'ejs');
