@@ -1,11 +1,14 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/lawar', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+const mysql = require('mysql');
+
+ var con = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '', 
+  database: 'lawar_db'
+ });
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -14,10 +17,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.use(session({
-  secret: 'lawar_secret',
+  secret: process.env.SESSION_SECRET || 'lawar_secret',
   resave: false,
   saveUninitialized: true
 }));
+
+// Middleware to check if user is logged in
+function isAuthenticated(req, res, next) {
+  if (req.session.role) {
+    return next();
+  }
+  res.redirect('/');
+}
 
 // GET: Login page
 app.get('/', (req, res) => {
@@ -27,24 +38,24 @@ app.get('/', (req, res) => {
 // POST: Handle login
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-
-  const wargaRegex = /^warga\d{3}$/;
-  const wargaPassRegex = /^\d{3}wrg$/;
-
-  const adminRegex = /^admin[a-zA-Z]{3}$/;
-  const adminPassRegex = /^\d{3}adm$/;
-
-  if (wargaRegex.test(username) && wargaPassRegex.test(password)) {
-    req.session.role = 'warga';
-    return res.redirect('/dashboard/warga');
-  }
-
-  if (adminRegex.test(username) && adminPassRegex.test(password)) {
-    req.session.role = 'admin';
-    return res.redirect('/dashboard/admin');
-  }
-
-  res.render('login', { error: 'Username/password salah' });
+  con.query('SELECT * FROM users WHERE username = ? AND password = ?',
+  [username, password], 
+  (error, results) => {
+    if (error) return res.render('login', { error: 'Database error' });
+    if (results.length === 0) return res.render('login', { error: 'Username/password salah' });
+    
+    // Set session role based on user role
+    req.session.userId = results[0].id;
+    req.session.role = results[0].role;
+    if (req.session.role === 'admin') {
+      return res.redirect('/dashboard/admin');
+    }
+    if (req.session.role === 'warga') {
+      return res.redirect('/dashboard/warga');
+    }
+    return res.render('login', { error: 'Role tidak dikenali' });
+    }
+  );
 });
 
 // GET: Admin Dashboard
@@ -64,6 +75,15 @@ app.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.redirect('/');
   });
+});
+
+// Error handling
+con.connect((err) => {
+  if (err) {
+    console.error('Database connection failed:', err);
+    return;
+  }
+  console.log('Connected to MySQL database');
 });
 
 app.listen(3000, () => console.log('Server running on http://localhost:3000'));
