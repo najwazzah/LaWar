@@ -1,50 +1,89 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard Admin</title>
-  <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - LaWar</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-  <div class="sidebar">
-    <div class="profile">
-      <img src="/img/admin-avatar.png" alt="Admin Avatar">
-      <p>Admin</p>
+<body class="admin-page">
+    <!-- Header -->
+    <div class="admin-header">
+        <div class="logo">LaWar!</div>
+        <div class="header-right">
+            <div class="batik-pattern"></div>
+        </div>
     </div>
-    <ul>
-      <li><a href="#">Dashboard</a></li>
-      <li><a href="#">Data</a></li>
-      <li><a href="#">Pengaduan</a></li>
-      <li><a href="#">Laporan</a></li>
-      <li><a href="#">Pengguna</a></li>
-      <li><a href="/logout">Logout</a></li>
-    </ul>
-  </div>
 
-  <div class="main-content">
-    <h1>Selamat Datang, Admin!</h1>
-    <div class="cards">
-      <div class="card red">
-        <div class="icon">❗</div>
-        <h2>2</h2>
-        <p>Pengaduan Menunggu</p>
-      </div>
-      <div class="card green">
-        <div class="icon">✅</div>
-        <h2>3</h2>
-        <p>Pengaduan Ditanggapi</p>
-      </div>
-      <div class="card blue">
-        <div class="icon">✔</div>
-        <h2>2</h2>
-        <p>Pengaduan Selesai</p>
-      </div>
-      <div class="card yellow">
-        <div class="icon">👥</div>
-        <h2>7</h2>
-        <p>Pengadu</p>
-      </div>
+    <!-- Main Container -->
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="admin-sidebar">
+            <div class="admin-profile">
+                <div class="profile-avatar">👨‍💼</div>
+                <div class="admin-name">Admin</div>
+            </div>
+            <ul class="sidebar-menu">
+              <li><a href="/dashboard/admin" class="<%= partial === null ? 'active' : '' %>">Dashboard</a></li>
+              <li><a href="/admin/data" class="<%= partial === 'data' ? 'active' : '' %>">Data</a></li>
+              <li><a href="/admin/pengaduan" class="<%= partial === 'pengaduan' ? 'active' : '' %>">Pengaduan</a></li>
+              <li><a href="/admin/pengguna" class="<%= partial === 'pengguna' ? 'active' : '' %>">Pengguna</a></li>
+              <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="admin-main-content">
+            <% if (!partial) { %>
+                <h1 class="welcome-message">Selamat Datang, Admin!</h1>
+
+                <!-- Stats Cards -->
+                <div class="stats-container">
+                    <!-- Card 1: Pengaduan Menunggu -->
+                    <div class="stat-card pending">
+                        <div class="stat-header-horizontal">
+                            <div class="stat-icon">📋</div>
+                            <div class="stat-number">2</div>
+                        </div>
+                        <div class="stat-label">Pengaduan Menunggu</div>
+                        <div class="stat-detail"><a href="#">Detail</a></div>
+                    </div>
+
+                    <!-- Card 2: Pengaduan Ditanggapi -->
+                    <div class="stat-card process">
+                        <div class="stat-header-horizontal">
+                            <div class="stat-icon">⏳</div>
+                            <div class="stat-number">3</div>
+                        </div>
+                        <div class="stat-label">Pengaduan Ditanggapi</div>
+                        <div class="stat-detail"><a href="#">Detail</a></div>
+                    </div>
+
+                    <!-- Card 3: Pengaduan Selesai -->
+                    <div class="stat-card completed">
+                        <div class="stat-header-horizontal">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-number">2</div>
+                        </div>
+                        <div class="stat-label">Pengaduan Selesai</div>
+                        <div class="stat-detail"><a href="#">Detail</a></div>
+                    </div>
+
+                    <!-- Card 4: Pengguna -->
+                    <div class="stat-card users">
+                        <div class="stat-header-horizontal">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-number">7</div>
+                        </div>
+                        <div class="stat-label">Pengguna</div>
+                        <div class="stat-detail"><a href="#">Detail</a></div>
+                    </div>
+                </div>
+            <% } else { %>
+                <%- include(partial, { data: typeof data !== 'undefined' ? data : [] }) %>
+            <% } %>
+        </div>
     </div>
-  </div>
 </body>
 </html>

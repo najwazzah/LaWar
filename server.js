@@ -1,30 +1,30 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/lawar', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
 
 const app = express();
+
+// Setup view engine dan lokasi views
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
 
+// Middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Setup session
 app.use(session({
   secret: 'lawar_secret',
   resave: false,
   saveUninitialized: true
 }));
 
-// GET: Login page
+// Halaman login (GET)
 app.get('/', (req, res) => {
   res.render('login', { error: null });
 });
 
-// POST: Handle login
+// Proses login (POST)
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
@@ -47,13 +47,13 @@ app.post('/login', (req, res) => {
   res.render('login', { error: 'Username/password salah' });
 });
 
-// GET: Admin Dashboard
+// Dashboard admin
 app.get('/dashboard/admin', (req, res) => {
   if (req.session.role !== 'admin') return res.redirect('/');
-  res.render('admin');
+  res.render('admin', { partial: null, data: [] }); // ✅ TAMBAHKAN data: []
 });
 
-// GET: Warga Dashboard
+// Dashboard warga
 app.get('/dashboard/warga', (req, res) => {
   if (req.session.role !== 'warga') return res.redirect('/');
   res.render('warga');
@@ -66,4 +66,12 @@ app.get('/logout', (req, res) => {
   });
 });
 
-app.listen(3000, () => console.log('Server running on http://localhost:3000'));
+// Import router admin
+const adminRoutes = require('./routes/admin');
+app.use('/admin', adminRoutes);
+
+// Jalankan server
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
