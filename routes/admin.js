@@ -35,7 +35,7 @@ router.get('/pengguna', (req, res) => {
 
 // route untuk halaman pengaduan
 router.get('/pengaduan', (req, res) => {
-  con.query('SELECT * FROM laporan', (err, results) => {
+  con.query('SELECT * FROM pengaduan', (err, results) => {
     if (err) {
       console.error(err);
       return res.render('admin', {
