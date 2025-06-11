@@ -15,6 +15,7 @@ CREATE TABLE laporan (
   jenis ENUM('kerusakan', 'Keamanan', 'Lingkungan') NOT NULL,
   lampiran VARCHAR(255),
   tanggal_lapor TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  status ENUM('Menunggu', 'Diproses', 'Selesai') DEFAULT 'Menunggu',
 );
 
 -- Bisa diganti Untuk isinya
