@@ -5,39 +5,45 @@
   <title>Form Pengaduan</title>
   <link rel="stylesheet" href="/style.css">
 </head>
-<body>
-  <div class="navbar">
-    <h1>LaWar!</h1>
-    <a href="/logout">Logout</a>
-  </div>
-
-  <div class="form-container">
-    <h2>Laporkan seluruh keluhanmu di sini!</h2>
+<body class="login-page">
+  <div class="form">
     <form action="/pengaduan" method="post" enctype="multipart/form-data">
-      <label for="judul">Judul Laporan</label>
-      <input type="text" name="judul" id="judul" required placeholder="Tuliskan judul laporan">
+      <h1>Laporkan seluruh keluhanmu di sini!</h1>
 
-      <label for="detail">Detail Laporan</label>
-      <textarea name="detail" id="detail" required placeholder="Tuliskan detail laporan"></textarea>
+      <div class="input-group">
+        <label for="judul">📝 Judul Laporan</label>
+        <input type="text" name="judul" id="judul" required placeholder="Tuliskan judul laporan">
+      </div>
 
-      <label for="instansi">Instansi</label>
-      <select name="instansi" id="instansi" required>
-        <option value="">Pilih instansi yang kamu tuju</option>
-        <option value="dinas-air">Dinas Air</option>
-        <option value="dinas-kebersihan">Dinas Kebersihan</option>
-        <option value="dinas-listrik">Dinas Listrik</option>
-      </select>
+      <div class="input-group">
+        <label for="detail">📄 Detail Laporan</label>
+        <textarea name="detail" id="detail" required placeholder="Tuliskan detail laporan"></textarea>
+      </div>
 
-      <label for="jenis">Jenis Laporan</label>
-      <select name="jenis" id="jenis" required>
-        <option value="">Pilih kategori laporan</option>
-        <option value="kerusakan">Kerusakan</option>
-        <option value="keamanan">Keamanan</option>
-        <option value="lingkungan">Lingkungan</option>
-      </select>
+      <div class="input-group">
+        <label for="instansi">🏢 Instansi</label>
+        <select name="instansi" id="instansi" required>
+          <option value="">Pilih instansi yang kamu tuju</option>
+          <option value="dinas-air">Dinas Air</option>
+          <option value="dinas-kebersihan">Dinas Kebersihan</option>
+          <option value="dinas-listrik">Dinas Listrik</option>
+        </select>
+      </div>
 
-      <label for="lampiran">Tambahkan Lampiran (JPG, PNG, PDF)</label>
-      <input type="file" name="lampiran" id="lampiran" accept=".jpg,.png,.pdf">
+      <div class="input-group">
+        <label for="jenis">📌 Jenis Laporan</label>
+        <select name="jenis" id="jenis" required>
+          <option value="">Pilih kategori laporan</option>
+          <option value="kerusakan">Kerusakan</option>
+          <option value="keamanan">Keamanan</option>
+          <option value="lingkungan">Lingkungan</option>
+        </select>
+      </div>
+
+      <div class="input-group">
+        <label for="lampiran">📎 Tambahkan Lampiran (JPG, PNG, PDF)</label>
+        <input type="file" name="lampiran" id="lampiran" accept=".jpg,.png,.pdf">
+      </div>
 
       <button type="submit">Laporkan</button>
     </form>

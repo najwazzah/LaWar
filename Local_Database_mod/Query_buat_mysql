@@ -1,0 +1,24 @@
+-- Buat bikin Table User
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  password VARCHAR(100) NOT NULL,
+  role ENUM('admin', 'warga') NOT NULL
+);
+
+--Buat bikin Table laporan
+CREATE TABLE laporan (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  judul VARCHAR(100) NOT NULL,
+  detail TEXT NOT NULL,
+  instansi ENUM('Dinas Air', 'Dinas Kebersihan', 'Dinas Listrik') NOT NULL,
+  jenis ENUM('kerusakan', 'Keamanan', 'Lingkungan') NOT NULL,
+  lampiran VARCHAR(255),
+  tanggal_lapor TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  status ENUM('Menunggu', 'Diproses', 'Selesai') DEFAULT 'Menunggu',
+);
+
+-- Bisa diganti Untuk isinya
+INSERT INTO users (username, password, role) VALUES
+('admin1', 'adminpass', 'admin'),
+('warga1', 'wargapass', 'warga');
