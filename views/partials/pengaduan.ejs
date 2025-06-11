@@ -8,7 +8,6 @@
     <thead>
       <tr>
         <th>No</th>
-        <th>Username</th>
         <th>Judul</th>
         <th>Isi</th>
         <th>Jenis Laporan</th>
@@ -21,13 +20,12 @@
     <tbody>
       <% if (data.length === 0) { %>
         <tr>
-          <td colspan="9" style="text-align: center;">Belum ada data</td>
+          <td colspan="8" style="text-align: center;">Belum ada data</td>
         </tr>
       <% } else { %>
          <% data.forEach((d, i) => { %>
       <tr>
         <td><%= i + 1 %></td>
-        <td>-</td> <!-- Username, jika ada relasi user -->
         <td><%= d.judul %></td>
         <td style="max-width: 350px; word-wrap: break-word; white-space: normal;"><%= d.detail %></td>
         <td><%= d.jenis %></td>
@@ -36,7 +34,7 @@
         <td><%= d.status %></td>
         <td>
           <% if (d.lampiran) { %>
-            <a href="/uploads/<%= d.lampiran %>" target="_blank">Lihat Lampiran</a>
+            <a href="/uploads/<%= d.lampiran %" target="_blank">Lihat Lampiran</a>
           <% } else { %>
             Tidak ada
           <% } %>
