@@ -6,7 +6,12 @@ CREATE TABLE users (
   role ENUM('admin', 'warga') NOT NULL
 );
 
---Buat bikin Table laporan
+-- Bisa diganti Untuk isinya
+INSERT INTO users (username, password, role) VALUES
+('admin1', 'adminpass', 'admin'),
+('warga1', 'wargapass', 'warga');
+
+--Buat bikin Table pengaduan
 CREATE TABLE pengaduan (
   id INT AUTO_INCREMENT PRIMARY KEY,
   judul VARCHAR(100) NOT NULL,
@@ -18,7 +23,3 @@ CREATE TABLE pengaduan (
   status ENUM('Menunggu', 'Diproses', 'Selesai') DEFAULT 'Menunggu',
 );
 
--- Bisa diganti Untuk isinya
-INSERT INTO users (username, password, role) VALUES
-('admin1', 'adminpass', 'admin'),
-('warga1', 'wargapass', 'warga');
