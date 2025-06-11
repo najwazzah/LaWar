@@ -2,7 +2,6 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 
-=======
 const mysql = require('mysql');
 const multer = require('multer');
 
@@ -33,7 +32,6 @@ app.use(session({
 
 
 // Halaman login (GET)
-=======
 //multer storage & file filter
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
