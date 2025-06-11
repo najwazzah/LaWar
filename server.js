@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const mysql = require('mysql');
+const multer = require('multer');
 
  var con = mysql.createConnection({
   host: 'localhost',
@@ -21,6 +22,26 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+
+//multer storage & file filter
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+const fileFilter = function (req, file, cb) {
+  const allowedTypes = /jpg|jpeg|png|pdf/;
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (allowedTypes.test(ext)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Format file tidak didukung!'), false);
+  }
+};
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 // Middleware to check if user is logged in
 function isAuthenticated(req, res, next) {
@@ -68,6 +89,24 @@ app.get('/dashboard/admin', (req, res) => {
 app.get('/dashboard/warga', (req, res) => {
   if (req.session.role !== 'warga') return res.redirect('/');
   res.render('warga');
+});
+
+// GET: Form Pengaduan
+app.post('/pengaduan', upload.single('lampiran'), (req, res) => {
+  const { judul, detail, instansi, jenis } = req.body;
+  const lampiran = req.file ? req.file.filename : null;
+
+  con.query(
+    'INSERT INTO pengaduan (judul, detail, instansi, jenis, lampiran) VALUES (?, ?, ?, ?, ?)',
+    [judul, detail, instansi, jenis, lampiran],
+    (error, result) => {
+      if (error) {
+        console.error(error);
+        return res.send('Gagal menyimpan laporan');
+      }
+      res.redirect('/dashboard/warga');
+    }
+  );
 });
 
 // Logout
