@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="admin-page">
-    <%- include(partial, { data: data }) %>
     <!-- Header -->
     <div class="admin-header">
         <div class="logo">LaWar!</div>
@@ -81,7 +80,7 @@
                     </div>
                 </div>
             <% } else { %>
-                <%- include(partial, { data: typeof data !== 'undefined' ? data : [] }) %>
+                <%- include(partial, { data: data }) %>
             <% } %>
         </div>
     </div>

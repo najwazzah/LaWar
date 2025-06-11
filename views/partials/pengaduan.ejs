@@ -14,13 +14,14 @@
         <th>Instansi</th>
         <th>Tanggal</th>
         <th>Status</th>
+        <th>Lampiran</th>
         <th>Aksi</th>
       </tr>
     </thead>
     <tbody>
       <% if (data.length === 0) { %>
         <tr>
-          <td colspan="8" style="text-align: center;">Belum ada data</td>
+          <td colspan="9" style="text-align: center;">Belum ada data</td>
         </tr>
       <% } else { %>
          <% data.forEach((d, i) => { %>
@@ -34,10 +35,14 @@
         <td><%= d.status %></td>
         <td>
           <% if (d.lampiran) { %>
-            <a href="/uploads/<%= d.lampiran %" target="_blank">Lihat Lampiran</a>
+           <a href="/uploads/<%= d.lampiran %>" target="_blank">Lihat Lampiran</a>
           <% } else { %>
             Tidak ada
           <% } %>
+        </td>
+        <td>
+                <a href="/admin/balas/<%= d._id %>" class="btn-aksi btn-balas">Balas</a>
+                <a href="/admin/hapus/<%= d._id %>" class="btn-aksi btn-hapus" onclick="return confirm('Yakin ingin hapus?')">Hapus</a>
         </td>
       </tr>
     <% }) %>

@@ -22,6 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static('uploads'));
 
 // Setup session
 app.use(session({
@@ -35,7 +36,7 @@ app.use(session({
 //multer storage & file filter
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, 'uploads');
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + path.extname(file.originalname));

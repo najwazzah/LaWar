@@ -1,4 +1,4 @@
-const laporanSchema = new mongoose.Schema({
+const pengaduanSchema = new mongoose.Schema({
     nama: String,
     judul: String,
     detail: String,
