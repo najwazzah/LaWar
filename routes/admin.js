@@ -21,17 +21,20 @@ router.get('/', (req, res) => {
 
 
 router.get('/pengguna', (req, res) => {
-    const dataPengguna = [
-        { nama: 'Siti Aminah', email: 'siti@example.com', username: 'sitiaminah', role: 'admin' },
-        { nama: 'Budi Hartono', email: 'budi@example.com', username: 'budih', role: 'user' }
-    ];
-
-    res.render('admin', {
-        partial: 'partials/pengguna',
-        data: dataPengguna
+    con.query('SELECT * FROM users', (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.render('admin', {
+                partial: 'partials/pengguna',
+                data: []
+            });
+        }
+        res.render('admin', {
+            partial: 'partials/pengguna',
+            data: results
+        });
     });
 });
-
 
 // route untuk halaman pengaduan
 router.get('/pengaduan', (req, res) => {
