@@ -9,12 +9,17 @@ router.get('/', (req, res) => {
   });
 });
 
-router.get('/data', (req, res) => {
-  console.log("✅ /admin/data terpanggil");
-  res.render('admin', {
-    partial: 'partials/data',
-    data: [] // bisa dummy atau real
-  });
+
+router.get('/pengguna', (req, res) => {
+    const dataPengguna = [
+        { nama: 'Siti Aminah', email: 'siti@example.com', username: 'sitiaminah', role: 'admin' },
+        { nama: 'Budi Hartono', email: 'budi@example.com', username: 'budih', role: 'user' }
+    ];
+
+    res.render('admin', {
+        partial: 'partials/pengguna',
+        data: dataPengguna
+    });
 });
 
 

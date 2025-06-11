@@ -1,68 +1,47 @@
-<div class="container mt-5">
-  <div class="card">
-    <div class="card-header bg-info text-white">
-      <strong>Data Pengadu</strong>
-    </div>
-    <div class="card-body">
-      <a href="tambah.php" style="display: inline-block; background-color: #007bff; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-bottom: 12px;">
-        + Tambah
-      </a>
+<div class="pengaduan-container">
+  <h2>Daftar Pengaduan</h2>
+  <a href="/admin/pengaduan/tambah" style="display: inline-block; background-color: #007bff; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-bottom: 12px;">
+    + Tambah
+  </a>
 
-      <table border="1" cellpadding="10" cellspacing="0">
-        <thead>
+  <table border="1" cellpadding="10" cellspacing="0">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Username</th>
+        <th>Judul</th>
+        <th>Isi</th>
+        <th>Jenis Laporan</th>
+        <th>Instansi</th>
+        <th>Tanggal</th>
+        <th>Status</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (data.length === 0) { %>
+        <tr>
+          <td colspan="8" style="text-align: center;">Belum ada data</td>
+        </tr>
+      <% } else { %>
+        <% data.forEach((d, i) => { %>
           <tr>
-            <th>No</th>
-            <th>Nama</th>
-            <th>Email</th>
-            <th>No HP</th>
-            <th>Isi</th>
-            <th>Tanggal</th>
-            <th>Status</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% if (data.length === 0) { %>
-            <tr>
-              <td colspan="8" class="text-center">Belum ada data</td>
-            </tr>
-          <% } else { %>
-            <% data.forEach((d, i) => { %>
-              <tr>
-                <td><%= i + 1 %></td>
-                <td style="white-space: nowrap;"><%= d.nama %></td>
-                <td style="white-space: nowrap;"><%= d.email %></td>
-                <td style="white-space: nowrap;"><%= d.telp %></td>
-                <td style="max-width: 350px; word-wrap: break-word; white-space: normal;"><%= d.isi %></td>
-                <td style="white-space: nowrap;"><%= d.tanggal %></td>
-                <td><%= d.status %></td>
-                <td>
-                  <a href="/admin/edit/<%= d._id %>" class="btn btn-success btn-sm">
-                    <i class="fa fa-edit"></i>
-                  </a>
-                  <a href="/admin/hapus/<%= d._id %>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin hapus?')">
-                    <i class="fa fa-trash"></i>
-                  </a>
-                </td>
-              </tr>
-            <% }) %>
-          <% } %>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+            <td><%= i + 1 %></td>
+            <td><%= d.username %></td>
+            <td style="max-width: 350px; word-wrap: break-word; white-space: normal;"><%= d.isi %></td>
+            <td><%= d.jenislaporan %></td>
+            <td><%= d.instansi %></td>
+            <td><%= d.tanggal %></td>
+            <td><%= d.status %></td>
+            <td><%= d.aksi %></td>
+            <td>
+                <a href="/admin/balas/<%= d._id %>" class="btn-aksi btn-balas">Balas</a>
+                <a href="/admin/hapus/<%= d._id %>" class="btn-aksi btn-hapus" onclick="return confirm('Yakin ingin hapus?')">Hapus</a>
+            </td>
 
-<!-- JQuery & DataTables -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script>
-  $(document).ready(function () {
-    $('#tabel_pengadu').DataTable({
-      autoWidth: false,
-      columnDefs: [
-        { targets: 4, width: "350px" } // Atur lebar kolom "Isi"
-      ]
-    });
-  });
-</script>
+          </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+</div>
