@@ -21,27 +21,29 @@
     <tbody>
       <% if (data.length === 0) { %>
         <tr>
-          <td colspan="8" style="text-align: center;">Belum ada data</td>
+          <td colspan="9" style="text-align: center;">Belum ada data</td>
         </tr>
       <% } else { %>
-        <% data.forEach((d, i) => { %>
-          <tr>
-            <td><%= i + 1 %></td>
-            <td><%= d.username %></td>
-            <td style="max-width: 350px; word-wrap: break-word; white-space: normal;"><%= d.isi %></td>
-            <td><%= d.jenislaporan %></td>
-            <td><%= d.instansi %></td>
-            <td><%= d.tanggal %></td>
-            <td><%= d.status %></td>
-            <td><%= d.aksi %></td>
-            <td>
-                <a href="/admin/balas/<%= d._id %>" class="btn-aksi btn-balas">Balas</a>
-                <a href="/admin/hapus/<%= d._id %>" class="btn-aksi btn-hapus" onclick="return confirm('Yakin ingin hapus?')">Hapus</a>
-            </td>
-
-          </tr>
-        <% }) %>
-      <% } %>
+         <% data.forEach((d, i) => { %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td>-</td> <!-- Username, jika ada relasi user -->
+        <td><%= d.judul %></td>
+        <td style="max-width: 350px; word-wrap: break-word; white-space: normal;"><%= d.detail %></td>
+        <td><%= d.jenis %></td>
+        <td><%= d.instansi %></td>
+        <td><%= d.tanggal_lapor.toLocaleString ? d.tanggal_lapor.toLocaleString() : d.tanggal_lapor %></td>
+        <td><%= d.status %></td>
+        <td>
+          <% if (d.lampiran) { %>
+            <a href="/uploads/<%= d.lampiran %>" target="_blank">Lihat Lampiran</a>
+          <% } else { %>
+            Tidak ada
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+  <% } %>
     </tbody>
   </table>
 </div>
