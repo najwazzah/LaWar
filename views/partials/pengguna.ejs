@@ -1,0 +1,37 @@
+<div class="pengguna-container">
+    <h2>Daftar Pengguna</h2>
+    <a href="#" style="display: inline-block; background-color: #007bff; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-bottom: 12px;">
+        + Tambah
+    </a>
+
+    <table class="tabel-pengguna">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Username</th>
+                <th>Level</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (data.length > 0) { %>
+                <% data.forEach((user, index) => { %>
+                    <tr>
+                        <td><%= index + 1 %></td>
+                        <td><%= user.username %></td>
+                        <td><%= user.level %></td>
+                        <td>
+                            <a href="#" class="btn-edit">Edit</a>
+                            <a href="#" class="btn-hapus">Hapus</a>
+                        </td>
+
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="4">Belum ada data pengguna.</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>
