@@ -54,5 +54,42 @@ router.get('/pengaduan', (req, res) => {
   });
 });
 
+router.get('/balas/:id', (req, res) => {
+  const id = req.params.id;
+  // Ubah status menjadi 'Selesai'
+  con.query(
+    "UPDATE pengaduan SET status = 'Selesai' WHERE id = ?",
+    [id],
+    (err, result) => {
+      if (err) {
+        console.error(err);
+        // Bisa tambahkan pesan error jika ingin
+      }
+      res.redirect('/admin/pengaduan');
+    }
+  );
+});
+
+router.get('/hapus/:id', (req, res) => {
+  const id = req.params.id;
+  con.query('DELETE FROM pengaduan WHERE id = ?', [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      // Bisa tampilkan pesan error jika ingin
+    }
+    res.redirect('/admin/pengaduan');
+  });
+});
+
+router.get('/hapus-user/:id', (req, res) => {
+  const id = req.params.id;
+  con.query('DELETE FROM users WHERE id = ?', [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      // Bisa tampilkan pesan error jika ingin
+    }
+    res.redirect('/admin/pengguna');
+  });
+});
 
 module.exports = router;

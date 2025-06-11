@@ -1,8 +1,5 @@
 <div class="pengaduan-container">
   <h2>Daftar Pengaduan</h2>
-  <a href="/admin/pengaduan/tambah" style="display: inline-block; background-color: #007bff; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-bottom: 12px;">
-    + Tambah
-  </a>
 
   <table border="1" cellpadding="10" cellspacing="0">
     <thead>
@@ -41,8 +38,8 @@
           <% } %>
         </td>
         <td>
-                <a href="/admin/balas/<%= d._id %>" class="btn-aksi btn-balas">Balas</a>
-                <a href="/admin/hapus/<%= d._id %>" class="btn-aksi btn-hapus" onclick="return confirm('Yakin ingin hapus?')">Hapus</a>
+                <a href="/admin/balas/<%= d.id %>" class="btn-aksi btn-balas">Balas</a>
+                <a href="/admin/hapus/<%= d.id %>" class="btn-aksi btn-hapus" onclick="return confirm('Yakin ingin hapus?')">Hapus</a>
         </td>
       </tr>
     <% }) %>
