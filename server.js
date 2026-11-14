@@ -102,7 +102,8 @@ function renderWargaPage(req, res, partial = null) {
   res.render('warga', {
     partial: partial || null,
     data: [],
-    successMessage: successMessage || null
+    successMessage: successMessage || null,
+    user: req.session.user || null
   });
 }
 

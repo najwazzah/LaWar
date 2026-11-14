@@ -76,7 +76,7 @@
                     </div>
                 </div>
             <% } else { %>
-                <%- include(partial, { data: data }) %>
+                <%- include(partial, { data: data, pagination: pagination || { page: 1, perPage: 5, total: 0, totalPages: 1 } }) %>
             <% } %>
         </main>
     </div>

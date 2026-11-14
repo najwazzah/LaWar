@@ -21,35 +21,68 @@ router.get('/', (req, res) => {
 
 
 router.get('/pengguna', (req, res) => {
+    const page = Math.max(1, Number(req.query.page) || 1);
+    const perPage = 5;
+
     con.query('SELECT * FROM users', (err, results) => {
         if (err) {
             console.error(err);
             return res.render('admin', {
                 partial: 'partials/pengguna',
-                data: []
+                data: [],
+                pagination: { page, perPage, total: 0, totalPages: 1 }
             });
         }
+
+        const total = results.length;
+        const totalPages = Math.max(1, Math.ceil(total / perPage));
+        const safePage = Math.min(page, totalPages);
+        const start = (safePage - 1) * perPage;
+        const paginated = results.slice(start, start + perPage);
+
         res.render('admin', {
             partial: 'partials/pengguna',
-            data: results
+            data: paginated,
+            pagination: {
+                page: safePage,
+                perPage,
+                total,
+                totalPages
+            }
         });
     });
 });
 
 // route untuk halaman pengaduan
 router.get('/pengaduan', (req, res) => {
+  const page = Math.max(1, Number(req.query.page) || 1);
+  const perPage = 5;
+
   con.query('SELECT * FROM pengaduan', (err, results) => {
     if (err) {
       console.error(err);
       return res.render('admin', {
         partial: 'partials/pengaduan',
-        data: []
+        data: [],
+        pagination: { page, perPage, total: 0, totalPages: 1 }
       });
     }
-    // Format data if needed
+
+    const total = results.length;
+    const totalPages = Math.max(1, Math.ceil(total / perPage));
+    const safePage = Math.min(page, totalPages);
+    const start = (safePage - 1) * perPage;
+    const paginated = results.slice(start, start + perPage);
+
     res.render('admin', {
       partial: 'partials/pengaduan',
-      data: results
+      data: paginated,
+      pagination: {
+        page: safePage,
+        perPage,
+        total,
+        totalPages
+      }
     });
   });
 });

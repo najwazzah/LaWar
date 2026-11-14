@@ -1,33 +1,45 @@
 <div class="pengguna-container">
     <h2>Daftar Pengguna</h2>
 
-    <table class="tabel-pengguna">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% if (data.length > 0) { %>
-                <% data.forEach((user, index) => { %>
-                    <tr>
-                        <td><%= index + 1 %></td>
-                        <td><%= user.username %></td>
-                        <td><%= user.role %></td>
-                        <td>
-                            <a href="/admin/hapus-user/<%= user.id %>" class="btn-hapus" onclick="return confirm('Yakin ingin hapus user ini?')">Hapus</a>
-                        </td>
+    <div class="pagination-info">
+        Menampilkan <strong><%= data.length %></strong> dari <strong><%= pagination.total %></strong> data
+    </div>
 
-                    </tr>
-                <% }) %>
-            <% } else { %>
+    <div class="table-scroll">
+        <table class="tabel-pengguna data-table">
+            <thead>
                 <tr>
-                    <td colspan="4">Belum ada data pengguna.</td>
+                    <th>No</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Aksi</th>
                 </tr>
-            <% } %>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <% if (data.length > 0) { %>
+                    <% data.forEach((user, index) => { %>
+                        <tr>
+                            <td><%= ((pagination.page - 1) * pagination.perPage) + index + 1 %></td>
+                            <td><%= user.username %></td>
+                            <td><%= user.role %></td>
+                            <td>
+                                <a href="/admin/hapus-user/<%= user.id %>" class="btn-hapus" onclick="return confirm('Yakin ingin hapus user ini?')">Hapus</a>
+                            </td>
+
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4">Belum ada data pengguna.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination-controls">
+        <a href="/admin/pengguna?page=<%= Math.max(1, pagination.page - 1) %>" class="page-btn <%= pagination.page === 1 ? 'disabled' : '' %>">Sebelumnya</a>
+        <span class="page-indicator">Halaman <%= pagination.page %> / <%= pagination.totalPages %></span>
+        <a href="/admin/pengguna?page=<%= Math.min(pagination.totalPages, pagination.page + 1) %>" class="page-btn <%= pagination.page === pagination.totalPages ? 'disabled' : '' %>">Selanjutnya</a>
+    </div>
 </div>

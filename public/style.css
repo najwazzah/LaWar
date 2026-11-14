@@ -776,6 +776,10 @@ button:hover {
         width: 110px;
     }
 
+    .table-scroll {
+        max-height: 62vh;
+    }
+
     .admin-container,
     .warga-container {
         min-height: calc(100vh - 72px);
@@ -865,6 +869,19 @@ button:hover {
         flex-direction: column;
         align-items: flex-start;
     }
+
+    .data-table,
+    .tabel-pengguna {
+        min-width: 860px;
+    }
+
+    .data-table th,
+    .data-table td,
+    .tabel-pengguna th,
+    .tabel-pengguna td {
+        font-size: 14px;
+        padding: 12px 8px;
+    }
 }
 
 /* =========================================
@@ -898,17 +915,55 @@ button:hover {
     margin-bottom: 20px;
 }
 
-.tabel-pengguna {
+.table-scroll {
     width: 100%;
-    border-collapse: collapse;
-    background-color: #ffffff;
+    max-height: 72vh;
+    overflow: auto;
+    border-radius: 12px;
+    border: 1px solid rgba(122, 79, 79, 0.2);
+    background: #fff;
+    box-shadow: inset 0 0 0 1px rgba(122, 79, 79, 0.05);
 }
 
+.data-table {
+    width: 100%;
+    min-width: 1100px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #ffffff;
+    table-layout: fixed;
+}
+
+.data-table th,
+.data-table td,
 .tabel-pengguna th,
 .tabel-pengguna td {
-    border: 1px solid #ccc;
-    padding: 10px 15px;
+    border: 1px solid #d9c9b8;
+    padding: 18px 14px;
     text-align: center;
+    vertical-align: middle;
+    font-size: 18px;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.data-table thead th,
+.tabel-pengguna th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: #7a4f4f;
+    color: white;
+    font-weight: 700;
+    white-space: normal;
+    min-width: 120px;
+}
+
+.tabel-pengguna {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #ffffff;
 }
 
 .tabel-pengguna th {
@@ -982,10 +1037,58 @@ button:hover {
     margin-bottom: 20px;
 }
 
+.pagination-info {
+    margin-bottom: 14px;
+    color: #5a2c2c;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.page-btn {
+    display: inline-block;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #7a4f4f;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.page-btn.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.page-indicator {
+    color: #5a2c2c;
+    font-weight: 600;
+}
+
 .pengaduan-container table {
     width: 100%;
     border-collapse: collapse;
     background-color: #ffffff;
+}
+
+.pengaduan-container thead th:nth-child(1),
+.pengaduan-container thead th:nth-child(2),
+.pengaduan-container thead th:nth-child(3),
+.pengaduan-container thead th:nth-child(4),
+.pengaduan-container thead th:nth-child(5),
+.pengaduan-container thead th:nth-child(6),
+.pengaduan-container thead th:nth-child(7),
+.pengaduan-container thead th:nth-child(8),
+.pengaduan-container thead th:nth-child(9) {
+    min-width: 120px;
 }
 
 .pengaduan-container th,

@@ -34,7 +34,12 @@ router.get('/', (req, res) => {
   const successMessage = req.session && req.session.successMessage ? req.session.successMessage : null;
   if (req.session && req.session.successMessage) delete req.session.successMessage;
 
-  res.render('warga', { successMessage });
+  res.render('warga', {
+    partial: null,
+    data: [],
+    successMessage: successMessage || null,
+    user: req.session && req.session.user ? req.session.user : null
+  });
 });
 
 router.post('/lapor', upload.single('lampiran'), (req, res) => {
