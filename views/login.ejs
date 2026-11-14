@@ -2,7 +2,9 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - LaWar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 </head>
 <body class="login-page">
@@ -13,6 +15,7 @@
 
     <form action="/login" method="POST">
         <h1>Login</h1>
+        <p class="subtitle">Silakan masuk untuk melanjutkan</p>
 
         <div class="input-group">
             <label><span class="icon">👤</span>Username</label>
@@ -22,10 +25,9 @@
         <div class="input-group">
             <label><span class="icon">🔑</span>Password</label>
             <input type="password" name="password" placeholder="Masukkan password Anda" required>
-            <div class="forgot-password">lupa password?</div>
         </div>
 
-        <% if (error) { %>
+        <% if (typeof error !== 'undefined' && error) { %>
             <p class="error"><%= error %></p>
         <% } %>
 
@@ -33,4 +35,3 @@
     </form>
 </body>
 </html>
-

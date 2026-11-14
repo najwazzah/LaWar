@@ -4,85 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - LaWar</title>
-    <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body class="admin-page">
-    <!-- Header -->
-    <div class="admin-header">
+    <header class="admin-header">
         <div class="logo">LaWar!</div>
         <div class="header-right">
             <div class="batik-pattern"></div>
         </div>
-    </div>
+    </header>
 
-    <!-- Main Container -->
     <div class="admin-container">
-        <!-- Sidebar -->
-        <div class="admin-sidebar">
+        <aside class="admin-sidebar">
             <div class="admin-profile">
                 <div class="profile-avatar">👨‍💼</div>
                 <div class="admin-name">Admin</div>
+                <div class="profile-role">Administrator</div>
             </div>
+
             <ul class="sidebar-menu">
-              <li><a href="/dashboard/admin" class="<%= partial === null ? 'active' : '' %>">Dashboard</a></li>
-              <li><a href="/admin/pengaduan" class="<%= partial === 'pengaduan' ? 'active' : '' %>">Pengaduan</a></li>
-              <li><a href="/admin/pengguna" class="<%= partial === 'pengguna' ? 'active' : '' %>">Pengguna</a></li>
-              <li><a href="/logout">Logout</a></li>
+                <li><a href="/dashboard/admin" class="<%= partial === null ? 'active' : '' %>"><span class="menu-icon">🏠</span>Dashboard</a></li>
+                <li><a href="/admin/pengaduan" class="<%= partial === 'pengaduan' ? 'active' : '' %>"><span class="menu-icon">📨</span>Pengaduan</a></li>
+                <li><a href="/admin/pengguna" class="<%= partial === 'pengguna' ? 'active' : '' %>"><span class="menu-icon">👥</span>Pengguna</a></li>
+                <li class="logout"><a href="/logout"><span class="menu-icon">🚪</span>Logout</a></li>
             </ul>
-        </div>
+        </aside>
 
-        <!-- Main Content -->
-        <div class="admin-main-content">
+        <main class="admin-main-content">
             <% if (!partial) { %>
-                <h1 class="welcome-message">Selamat Datang, Admin!</h1>
+                <div class="page-title">
+                    <h1 class="welcome-message">Selamat Datang, Admin!</h1>
+                    <p class="welcome-sub">Berikut ringkasan pengaduan dan pengguna saat ini.</p>
+                </div>
 
-                <!-- Stats Cards -->
                 <div class="stats-container">
-                    <!-- Card 1: Pengaduan Menunggu -->
                     <div class="stat-card pending">
                         <div class="stat-header-horizontal">
                             <div class="stat-icon">📋</div>
                             <div class="stat-number">2</div>
                         </div>
                         <div class="stat-label">Pengaduan Menunggu</div>
-                        <div class="stat-detail"><a href="#">Detail</a></div>
+                        <div class="stat-detail"><a href="/admin/pengaduan">Lihat detail →</a></div>
                     </div>
 
-                    <!-- Card 2: Pengaduan Ditanggapi -->
                     <div class="stat-card process">
                         <div class="stat-header-horizontal">
                             <div class="stat-icon">⏳</div>
                             <div class="stat-number">3</div>
                         </div>
                         <div class="stat-label">Pengaduan Ditanggapi</div>
-                        <div class="stat-detail"><a href="#">Detail</a></div>
+                        <div class="stat-detail"><a href="/admin/pengaduan">Lihat detail →</a></div>
                     </div>
 
-                    <!-- Card 3: Pengaduan Selesai -->
                     <div class="stat-card completed">
                         <div class="stat-header-horizontal">
                             <div class="stat-icon">✅</div>
                             <div class="stat-number">2</div>
                         </div>
                         <div class="stat-label">Pengaduan Selesai</div>
-                        <div class="stat-detail"><a href="#">Detail</a></div>
+                        <div class="stat-detail"><a href="/admin/pengaduan">Lihat detail →</a></div>
                     </div>
 
-                    <!-- Card 4: Pengguna -->
                     <div class="stat-card users">
                         <div class="stat-header-horizontal">
                             <div class="stat-icon">👥</div>
                             <div class="stat-number">7</div>
                         </div>
                         <div class="stat-label">Pengguna</div>
-                        <div class="stat-detail"><a href="#">Detail</a></div>
+                        <div class="stat-detail"><a href="/admin/pengguna">Lihat detail →</a></div>
                     </div>
                 </div>
             <% } else { %>
                 <%- include(partial, { data: data }) %>
             <% } %>
-        </div>
+        </main>
     </div>
 </body>
 </html>
