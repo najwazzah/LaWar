@@ -1,47 +1,50 @@
 const express = require('express');
 const router = express.Router();
-const Laporan = require('../models/laporan');
+const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
 
-// Konfigurasi penyimpanan file
+const uploadDir = path.join(__dirname, '..', 'public', 'uploads');
+if (fs.existsSync(uploadDir) && fs.statSync(uploadDir).isFile()) {
+  fs.unlinkSync(uploadDir);
+}
+fs.mkdirSync(uploadDir, { recursive: true });
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/uploads'); // simpan ke folder public/uploads
+    cb(null, uploadDir);
   },
   filename: function (req, file, cb) {
     const uniqueName = Date.now() + path.extname(file.originalname);
-    cb(null, uniqueName); // nama file unik
+    cb(null, uniqueName);
   }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
-// GET: Form laporan warga
 router.get('/', (req, res) => {
-  res.render('warga');
+  const successMessage = req.session && req.session.successMessage ? req.session.successMessage : null;
+  if (req.session && req.session.successMessage) delete req.session.successMessage;
+
+  res.render('warga', { successMessage });
 });
 
-// POST: Kirim laporan warga
-router.post('/lapor', upload.single('lampiran'), async (req, res) => {
-  try {
-    const { judul, detail, instansi, jenis } = req.body;
-    const lampiran = req.file ? req.file.filename : null;
+router.post('/lapor', upload.single('lampiran'), (req, res) => {
+  const { judul, detail, instansi, jenis } = req.body;
+  const lampiran = req.file ? req.file.filename : null;
 
-    await Laporan.create({
-      nama: 'Anonim', // atau ganti dengan req.session.nama jika pakai sistem login nama warga
-      judul,
-      detail,
-      instansi,
-      jenis,
-      lampiran
-    });
-
-    res.redirect('/dashboard/warga');
-  } catch (error) {
-    console.error('Gagal mengirim laporan:', error);
-    res.status(500).send('Terjadi kesalahan saat mengirim laporan.');
+  if (!judul || !detail || !instansi || !jenis) {
+    return res.status(400).send('Semua field wajib diisi.');
   }
+
+  req.session.successMessage = 'Laporan Anda berhasil terkirim!';
+  req.session.save((saveErr) => {
+    if (saveErr) {
+      console.error('Session save error:', saveErr);
+      return res.status(500).send('Terjadi kesalahan saat menyimpan notifikasi.');
+    }
+    res.redirect('/dashboard/warga?success=1');
+  });
 });
 
 module.exports = router;
