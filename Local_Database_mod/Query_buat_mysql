@@ -17,9 +17,9 @@ CREATE TABLE pengaduan (
   judul VARCHAR(100) NOT NULL,
   detail TEXT NOT NULL,
   instansi ENUM('Dinas Air', 'Dinas Kebersihan', 'Dinas Listrik') NOT NULL,
-  jenis ENUM('Kerusakan', 'Keamanan', 'Lingkungan') NOT NULL,
+  jenis ENUM('kerusakan', 'Keamanan', 'Lingkungan') NOT NULL,
   lampiran VARCHAR(255),
   tanggal_lapor TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  status ENUM('Menunggu', 'Diproses', 'Selesai') DEFAULT 'Menunggu'
+  status ENUM('Menunggu', 'Diproses', 'Selesai') DEFAULT 'Menunggu',
 );
 

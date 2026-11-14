@@ -2,92 +2,51 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Warga - LaWar</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Form Pengaduan</title>
   <link rel="stylesheet" href="/style.css">
 </head>
-<body class="warga-page">
-  <header class="warga-header">
-    <div class="logo">LaWar!</div>
-    <div class="header-right">
-      <div class="batik-pattern"></div>
-    </div>
-  </header>
+<body class="login-page">
+  <div class="form">
+    <form action="/pengaduan" method="post" enctype="multipart/form-data">
+      <h1>Laporkan seluruh keluhanmu di sini!</h1>
 
-  <div class="warga-container">
-    <aside class="warga-sidebar">
-      <div class="warga-profile">
-        <div class="profile-avatar">👤</div>
-        <div class="profile-name">Warga</div>
-        <div class="profile-role">Pelapor</div>
+      <div class="input-group">
+        <label for="judul">📝 Judul Laporan</label>
+        <input type="text" name="judul" id="judul" required placeholder="Tuliskan judul laporan">
       </div>
 
-      <ul class="warga-menu">
-        <li><a href="/dashboard/warga" class="<%= partial === null ? 'active' : '' %>"><span class="menu-icon">🏠</span>Dashboard</a></li>
-        <li><a href="/dashboard/warga/lapor" class="<%= partial === 'partials/warga_lapor' ? 'active' : '' %>"><span class="menu-icon">📝</span>Buat Laporan</a></li>
-        <li><a href="/dashboard/warga/riwayat" class="<%= partial === 'partials/warga_riwayat' ? 'active' : '' %>"><span class="menu-icon">🕘</span>Riwayat</a></li>
-        <li class="logout"><a href="/logout"><span class="menu-icon">🚪</span>Logout</a></li>
-      </ul>
-    </aside>
+      <div class="input-group">
+        <label for="detail">📄 Detail Laporan</label>
+        <textarea name="detail" id="detail" required placeholder="Tuliskan detail laporan"></textarea>
+      </div>
 
-    <main class="warga-main-content">
-      <% if (!partial) { %>
-        <div class="page-title">
-          <h1 class="welcome-message">Selamat Datang, Warga!</h1>
-          <p class="welcome-sub">Pantau status laporanmu atau buat laporan baru.</p>
-        </div>
+      <div class="input-group">
+        <label for="instansi">🏢 Instansi</label>
+        <select name="instansi" id="instansi" required>
+          <option value="">Pilih instansi yang kamu tuju</option>
+          <option value="dinas-air">Dinas Air</option>
+          <option value="dinas-kebersihan">Dinas Kebersihan</option>
+          <option value="dinas-listrik">Dinas Listrik</option>
+        </select>
+      </div>
 
-        <div class="warga-stats">
-          <div class="warga-stat-card pending">
-            <div class="stat-header-horizontal">
-              <div class="stat-icon">📋</div>
-              <div class="stat-number">2</div>
-            </div>
-            <div class="stat-label">Laporan Menunggu</div>
-            <div class="stat-detail"><a href="/dashboard/warga/riwayat">Lihat →</a></div>
-          </div>
+      <div class="input-group">
+        <label for="jenis">📌 Jenis Laporan</label>
+        <select name="jenis" id="jenis" required>
+          <option value="">Pilih kategori laporan</option>
+          <option value="kerusakan">Kerusakan</option>
+          <option value="keamanan">Keamanan</option>
+          <option value="lingkungan">Lingkungan</option>
+        </select>
+      </div>
 
-          <div class="warga-stat-card process">
-            <div class="stat-header-horizontal">
-              <div class="stat-icon">⏳</div>
-              <div class="stat-number">3</div>
-            </div>
-            <div class="stat-label">Sedang Diproses</div>
-            <div class="stat-detail"><a href="/dashboard/warga/riwayat">Lihat →</a></div>
-          </div>
+      <div class="input-group">
+        <label for="lampiran">📎 Tambahkan Lampiran (JPG, PNG, PDF)</label>
+        <input type="file" name="lampiran" id="lampiran" accept=".jpg,.png,.pdf">
+      </div>
 
-          <div class="warga-stat-card completed">
-            <div class="stat-header-horizontal">
-              <div class="stat-icon">✅</div>
-              <div class="stat-number">4</div>
-            </div>
-            <div class="stat-label">Selesai</div>
-            <div class="stat-detail"><a href="/dashboard/warga/riwayat">Lihat →</a></div>
-          </div>
-        </div>
-      <% } else { %>
-        <%- include(partial, { data: data }) %>
-      <% } %>
-    </main>
+      <button type="submit">Laporkan</button>
+    </form>
   </div>
-
-  <% if (typeof successMessage !== 'undefined' && successMessage) { %>
-    <div id="popup-success" class="popup-overlay show" role="alert" aria-live="assertive">
-      <div class="popup-card">
-        <div class="popup-icon">✓</div>
-        <h2>Laporan Terkirim</h2>
-        <p><%= successMessage %></p>
-        <button type="button" class="popup-close" onclick="document.getElementById('popup-success').classList.remove('show')">OK</button>
-      </div>
-    </div>
-
-    <script>
-      const popup = document.getElementById('popup-success');
-      if (popup) {
-        setTimeout(() => popup.classList.remove('show'), 2500);
-      }
-    </script>
-  <% } %>
 </body>
 </html>
