@@ -96,10 +96,38 @@ app.get('/dashboard/admin', (req, res) => {
   res.render('admin', { partial: null, data: [] }); // ✅ TAMBAHKAN data: []
 });
 
+function renderWargaPage(req, res, partial = null) {
+  if (req.session.role !== 'warga') return res.redirect('/');
+
+  const successMessage = req.session.successMessage || (req.query.success === '1' ? 'Laporan Anda berhasil terkirim!' : null);
+  delete req.session.successMessage;
+
+  res.render('warga', {
+    partial: partial || null,
+    data: [],
+    successMessage: successMessage || null
+  });
+}
+
 // Dashboard warga
 app.get('/dashboard/warga', (req, res) => {
-  if (req.session.role !== 'warga') return res.redirect('/');
-  res.render('warga');
+  renderWargaPage(req, res, null);
+});
+
+app.get('/dashboard/warga/lapor', (req, res) => {
+  renderWargaPage(req, res, 'partials/warga_lapor');
+});
+
+app.get('/dashboard/warga/riwayat', (req, res) => {
+  renderWargaPage(req, res, 'partials/warga_riwayat');
+});
+
+app.get('/warga/lapor', (req, res) => {
+  res.redirect('/dashboard/warga/lapor');
+});
+
+app.get('/warga/riwayat', (req, res) => {
+  res.redirect('/dashboard/warga/riwayat');
 });
 
 // GET: Form Pengaduan
@@ -115,7 +143,15 @@ app.post('/pengaduan', upload.single('lampiran'), (req, res) => {
         console.error(error);
         return res.send('Gagal menyimpan laporan');
       }
-      res.redirect('/dashboard/warga');
+
+      req.session.successMessage = 'Laporan Anda berhasil terkirim!';
+      req.session.save((saveErr) => {
+        if (saveErr) {
+          console.error('Session save error:', saveErr);
+          return res.status(500).send('Terjadi kesalahan saat menyimpan notifikasi.');
+        }
+        res.redirect('/dashboard/warga?success=1');
+      });
     }
   );
 });

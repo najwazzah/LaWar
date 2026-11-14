@@ -27,7 +27,10 @@ const upload = multer({ storage: storage });
 
 // GET: Form laporan warga
 router.get('/', (req, res) => {
-  res.render('warga');
+  const successMessage = req.session && req.session.successMessage ? req.session.successMessage : null;
+  if (req.session && req.session.successMessage) delete req.session.successMessage;
+
+  res.render('warga', { successMessage });
 });
 
 // POST: Kirim laporan warga
@@ -46,7 +49,15 @@ router.post('/lapor', upload.single('lampiran'), (req, res) => {
       console.error('Gagal mengirim laporan:', err);
       return res.status(500).send('Terjadi kesalahan saat mengirim laporan.');
     }
-    res.redirect('/dashboard/warga');
+
+    req.session.successMessage = 'Laporan Anda berhasil terkirim!';
+    req.session.save((saveErr) => {
+      if (saveErr) {
+        console.error('Session save error:', saveErr);
+        return res.status(500).send('Terjadi kesalahan saat menyimpan notifikasi.');
+      }
+      res.redirect('/dashboard/warga?success=1');
+    });
   });
 });
 
